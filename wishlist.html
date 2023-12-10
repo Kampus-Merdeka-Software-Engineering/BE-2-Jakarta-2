@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Penambahan Item ke Wishlist</title>
+</head>
+<body>
+    <h1>Tambahkan Item ke Wishlist</h1>
+    <form method="post" id="addItemForm">
+        <label for="itemName">Nama Item:</label>
+        <input type="text" id="itemName" name="itemName" required><br><br>
+        
+        <label for="itemDescription">Deskripsi Item:</label>
+        <textarea id="itemDescription" name="itemDescription" required></textarea><br><br>
+        
+        <button type="submit">Tambahkan ke Wishlist</button>
+    </form>
+
+    <script>
+        document.getElementById('addItemForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Mencegah pengiriman form secara default
+
+            const itemName = document.getElementById('itemName').value;
+            const itemDescription = document.getElementById('itemDescription').value;
+
+            fetch('http://localhost:3000/wishlist/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    item_name: itemName,
+                    item_description: itemDescription
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Item berhasil ditambahkan ke wishlist!');
+                    // Lakukan sesuatu setelah item ditambahkan, seperti meng-update daftar item wishlist yang ditampilkan
+                } else {
+                    throw new Error('Gagal menambahkan item ke wishlist');
+                }
+            })
+            .catch(error => {
+                console.error('Terjadi kesalahan:', error);
+                alert('Terjadi kesalahan saat menambahkan item ke wishlist');
+            });
+        });
+    </script>
+</body>
+</html>
