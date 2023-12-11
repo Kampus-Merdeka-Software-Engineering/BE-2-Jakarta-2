@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Penambahan Penginapan</title>
+</head>
+<body>
+    <h1>Tambahkan Penginapan</h1>
+    <form method="post" id="addLodging" enctype="multipart/form-data">
+        <label for="image">Masukan Foto Penginapan:</label>
+        <input type="file" id="image" name="image" required><br><br>
+
+        <label for="location_name">Lokasi:</label>
+        <input type="text" id="location_name" name="location_name" required><br><br>
+
+        <label for="date">Tanggal:</label>
+        <input type="date" id="date" name="date" required><br><br>
+
+        <label for="quota">Kuota:</label>
+        <input type="text" id="quota" name="quota" required><br><br>
+
+        <label for="description">Deskripsi:</label>
+        <input type="text" id="description" name="description" required><br><br>
+
+        <label for="price">Harga:</label>
+        <input type="text" id="price" name="price" required><br><br>
+        
+        <button type="submit">Tambahkan Penginapan</button>
+    </form>
+
+    <script>
+        document.getElementById('addLodging').addEventListener('submit', function(event) {
+            event.preventDefault(); // Mencegah pengiriman form secara default
+    
+            const form = document.getElementById('addLodging');
+            const formData = new FormData(form);
+    
+            fetch('http://localhost:3000/penginapan/add', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Penginapan berhasil ditambahkan!');
+                    // Lakukan sesuatu setelah item ditambahkan, seperti meng-update daftar item wishlist yang ditampilkan
+                } else {
+                    throw new Error('Gagal menambahkan penginapan');
+                }
+            })
+            .catch(error => {
+                console.error('Terjadi kesalahan:', error);
+                alert('Terjadi kesalahan saat menambahkan penginapan');
+            });
+        });
+    </script>    
+</body>
+</html>
