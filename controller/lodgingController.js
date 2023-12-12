@@ -7,6 +7,8 @@ const upload = require('../config/multerConfig');
 exports.getLodging = async (req, res) => {
     try {
         const lodgingItems = await Lodging.findAll();
+        res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+
         res.status(200).json(lodgingItems);
     } catch (error) {
         console.error('Gagal mendapatkan lodging: ', error);
@@ -30,6 +32,8 @@ exports.addToLodging = async (req, res) => {
             const image = req.file.filename; // Dapatkan nama file yang diunggah
 
             const newItem = await Lodging.create({ image, location_name, date, quota, description, price });
+            res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+
             res.status(200).send('Penginapan berhasil ditambahkan ke lodging');
         } catch (error) {
             console.error('Gagal menambahkan Penginapan ke lodging: ', error);

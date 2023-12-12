@@ -7,6 +7,9 @@ const upload = require('../config/multerConfig');
 exports.getPlace = async (req, res) => {
     try {
         const holidaysPlaceItems = await holidaysPlace.findAll();
+
+        res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+        
         res.status(200).json(holidaysPlaceItems);
     } catch (error) {
         console.error('Gagal mendapatkan Holidays Place: ', error);
@@ -27,6 +30,9 @@ exports.addToPlace = async (req, res) => {
         try {
             const { location_name, date, quota, description, price } = req.body;
             const image = req.file.filename; // Dapatkan nama file yang diunggah
+
+            res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+
 
             const newItem = await holidaysPlace.create({ image, location_name, date, quota, description, price });
             res.status(200).send('Penginapan berhasil ditambahkan ke Holidays Place');
